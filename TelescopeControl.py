@@ -12,6 +12,7 @@ class TelescopeControl:
         self.autresum = self.dcs.monitor('autresum')
 
     def azel(self, x, y):
+        #move the telescope x arcsec in azimuth and y arcsec in elevation
         azoff = self.dcs['azoff']
         eloff = self.dcs['eloff']
         azoff.write(x, rel2curr = t)
@@ -22,6 +23,8 @@ class TelescopeControl:
         return
 
     def en(self, x, y):
+        #	Move the telescope the given number of arcsec EAST & NORTH
+        #       relative to its current position
         if(x == 0.0 and y == 0.0):
             print("WARNING: x and y moves are both zero -- exiting\n"")
             return
@@ -35,6 +38,7 @@ class TelescopeControl:
         return
 
     def gmov(self, n, x1, y1, x2, y2):
+        #move an object to a given position on the KCWI guider
         gscale = self.instService.read('gscale') #TODO figure out how to read this
         dx = gscale * (x1-x2)
         dy = gscale * (y2-y1)
@@ -46,6 +50,7 @@ class TelescopeControl:
         return
 
     def gomark(self):
+        #restore telescope position to saved offsets
         #TODO syncheck
         raoff = instService['raoffset']
         decoff = instService['decoffset']
@@ -65,6 +70,7 @@ class TelescopeControl:
         return
 
     def gxy(self, x, Y):
+        #move the telescope in GUIDER coordinates
         tvxoff = self.dcs['tvxoff']
         tvyoff = self.dcs['tvyff']
         tvxoff.write(x, rel2curr = 't')
@@ -75,6 +81,7 @@ class TelescopeControl:
         return
 
     def mark(self):
+        #stores current ra and dec offsets
         #TODO syncheck
         raoff = self.dcs['raoff']
         decoff = self.dcs['decoff']
@@ -87,9 +94,11 @@ class TelescopeControl:
         return
 
     def markbase(self):
+        #set the base telescope coordinates to the current coordinates
         return self.dcs['mark'].write('true')
 
     def mov(self, n, x1, y1, x2, y2):
+        #move an object to a given position on the detector
         pscale = self.instService.read('pscale') #TODO figure out how to read this
         dx = pscale * (x1-x2)
         dy = pscale * (y2-y1)
@@ -97,10 +106,11 @@ class TelescopeControl:
             print("Required %f in x and %f in y" % (dx, dy))
         else:
             print("Moving %f in x and %f in y" % (dx, dy))
-            self.gxy(dx, dy)
+            self.mxy(dx, dy)
         return
 
     def mxy(self, n, abs, x, y):
+        #move telescope in instrument (detector) coordinates
         instxoff = self.dcs['tvxoff']
         instyoff = self.dcs['tvyff']
         if abs == True:
@@ -116,6 +126,7 @@ class TelescopeControl:
         return
 
     def wftel(self, autresum):
+        #wait for telescope move to complete
         startTime = time.time()
         axestat = self.dcs.monitor('AXESTAT')
         ktl.waitfor(axestat == "tracking")
