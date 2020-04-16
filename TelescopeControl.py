@@ -2,6 +2,17 @@ import ktl
 import time
 import math
 
+import logger
+
+log = logging.getLogger('MyLogger')
+log.setLevel(logging.INFO)
+nightpath = '' #TODO find nightpath
+LogFileHandler = logging.FileHandler(nightpath)
+LogConsoleHandler.setLevel(logging.INFO)
+LogFormat = logging.Formatter('%(asctime)s:%(message)s',
+                              datefmt='%Y-%m-%d %H:%M:%S')
+LogFileHandler.setFormatter(LogFormat)
+log.addHandler(LogFileHandler)
 
 class TelescopeControl:
 
@@ -33,7 +44,7 @@ class TelescopeControl:
         raoff.write(x, rel2curr = t)
         decoff.write(y, rel2curr = t)
         elapsedTime = self.wftel(self.autresum)
-        #TODO log move
+        log.info("[en] offset %f arcsec in RA, %f arcsec in DEC" % (x, y))
         print("[en] wftel completed in %f sec" % elapsedTime)
         return
 
@@ -42,11 +53,12 @@ class TelescopeControl:
         gscale = self.instService.read('gscale') #TODO figure out how to read this
         dx = gscale * (x1-x2)
         dy = gscale * (y2-y1)
-        if n == True: #TODO figure this out
+        if n == True:
             print("Required %f in x and %f in y" % (dx, dy))
         else:
             print("Moving %f in x and %f in y" % (dx, dy))
             gxy(dx, dy)
+            log.info('[gmov] executed')
         return
 
     def gomark(self):
@@ -62,10 +74,10 @@ class TelescopeControl:
         if raoff == 0 and decoff == 0:
             print("[gomark] NOTE: RA and DEC moves are both zero -- exiting\n")
             return
-        #TODO logging
         self.dcs['raoff'].write(raoff, rel2base = 't')
         self.dcs['decoff'].write(decoff, rel2base = 't')
         elapsedTime = self.wftel(self.autresum)
+        log.info("[gomark] offset %f in RA, %f in DEC" % (raoff, decoff))
         print("[gomark] wftel completed in %f sec" % elapsedTime)
         return
 
@@ -76,7 +88,7 @@ class TelescopeControl:
         tvxoff.write(x, rel2curr = 't')
         tvyoff.write(y, rel2curr = 't')
         elapsedTime = self.wftel(self.autresum)
-        #TODO log move
+        log.info("[gxy] offset %f, %f in guider coordinates" % (x, y))
         print("[gxy] wftel completed in %f sec" % elapsedTime)
         return
 
@@ -91,10 +103,12 @@ class TelescopeControl:
         raoff = raoff * math.cos(dec)
         instService['RAOFFSET'].write(raoff)
         instService['DECOFFSET'].write(decoff)
+        log.info("[mark] stored offsets RA %f, DEC %f" % (x, y))
         return
 
     def markbase(self):
         #set the base telescope coordinates to the current coordinates
+        log.info("[markbase] executed")
         return self.dcs['mark'].write('true')
 
     def mov(self, n, x1, y1, x2, y2):
@@ -107,6 +121,7 @@ class TelescopeControl:
         else:
             print("Moving %f in x and %f in y" % (dx, dy))
             self.mxy(dx, dy)
+            log.info('[mov] executed')
         return
 
     def mxy(self, n, abs, x, y):
@@ -120,8 +135,10 @@ class TelescopeControl:
             instxoff.write(x, rel2curr = 't')
             instyoff.write(y, rel2curr = 't')
         elapsedTime = self.wftel(self.autresum)
-        #TODO no move?
-        #TODO log move
+        if n == True:
+            print("[mxy] move command (NOT SENT) is: instoffx.write(%f) instyoff.write(%f)" % (x, y))
+            return
+        log.info("[mxy] offest %f, %f, abs = %s in detector coordinates" % (x, y, abs))
         print("[mxy] wftel completed in %f sec" % elapsedTime)
         return
 
@@ -155,3 +172,5 @@ class TelescopeControl:
             time.sleep(1)
         elapsedTime = time.time() - startTime
         return elapsedTime
+
+    def
