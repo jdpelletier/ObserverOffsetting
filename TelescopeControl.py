@@ -37,6 +37,7 @@ class TelescopeControl:
         eloff.write(y, rel2curr = t)
         time.sleep(3)
         elapsedTime = self.wftel(self.autresum)
+        log.info("[azel] offset %f arcsec in AZ, %f arcsec in EL" % (x, y))
         print("[azel] wftel completed in %f sec" % elapsedTime)
         return
 
