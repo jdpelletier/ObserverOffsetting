@@ -25,7 +25,7 @@ log = KeckLogger.getLogger()
 dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUMENT')
 instService = ktl.Service(instrument)
-pscale = instService.read('pscale') #TODO figure out how to read this
+pscale = instService.read('pscale')
 
 dx = pscale * (args.x1-args.x2)
 dy = pscale * (args.y2-args.y1)
