@@ -3,21 +3,27 @@ import argparse
 import wftel
 
 parser = argparse.ArgumentParser(description="Move the telescope in the az-el directions",
-                         usage="azel.py az el")
+                         usage="azel.py azoff eloff")
 
-parser.add_argument("az", type = float, help="az offset")
+parser.add_argument("azoff", type = float, help="az offset")
 
-parser.add_argument("el", type=float, help="el offset")
+parser.add_argument("eloff", type=float, help="el offset")
 
 
 args = parser.parse_args()
 
-dcs = ktl.Service('dcs')
-az = dcs['az']
-el = dcs['el']
-azoff.write(args.az, rel2curr = t)
-eloff.write(ars.el, rel2curr = t)
-time.sleep(3)
-elapsedTime = wftel()
-#TODO add logging
-print("[azel] wftel completed in %f sec" % elapsedTime)
+
+def azel(x, Y):
+    dcs = ktl.Service('dcs')
+    azoff = dcs['azoff']
+    eloff = dcs['eloff']
+    azoff.write(x, rel2curr = t)
+    eloff.write(y, rel2curr = t)
+    time.sleep(3)
+    elapsedTime = wftel()
+    #TODO add logging
+    print("[azel] wftel completed in %f sec" % elapsedTime)
+    return True
+
+if name == __main__:
+    azel(args.azoff, args.eloff)

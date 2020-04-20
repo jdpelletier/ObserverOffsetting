@@ -57,7 +57,7 @@ class TelescopeControl:
         return
 
     def gmov(self, n, x1, y1, x2, y2):
-        #move an object to a given position on the KCWI guider
+        #move an object to a given position on the guider
         gscale = self.instService.read('gscale') #TODO figure out how to read this
         dx = gscale * (x1-x2)
         dy = gscale * (y2-y1)
@@ -71,7 +71,6 @@ class TelescopeControl:
 
     def gomark(self):
         #restore telescope position to saved offsets
-        #TODO syncheck
         raoff = instService['raoffset']
         decoff = instService['decoffset']
         pattern = instService['pattern']
@@ -92,7 +91,7 @@ class TelescopeControl:
     def gxy(self, x, Y):
         #move the telescope in GUIDER coordinates
         tvxoff = self.dcs['tvxoff']
-        tvyoff = self.dcs['tvyff']
+        tvyoff = self.dcs['tvyoff']
         tvxoff.write(x, rel2curr = 't')
         tvyoff.write(y, rel2curr = 't')
         elapsedTime = self.wftel(self.autresum)
@@ -102,7 +101,6 @@ class TelescopeControl:
 
     def mark(self):
         #stores current ra and dec offsets
-        #TODO syncheck
         raoff = self.dcs['raoff']
         decoff = self.dcs['decoff']
         raoff = raoff * 180 * 3600 / math.pi
@@ -116,8 +114,9 @@ class TelescopeControl:
 
     def markbase(self):
         #set the base telescope coordinates to the current coordinates
+        self.dcs['mark'].write('true')
         log.info("[markbase] executed")
-        return self.dcs['mark'].write('true')
+        return
 
     def mov(self, n, x1, y1, x2, y2):
         #move an object to a given position on the detector
@@ -134,8 +133,11 @@ class TelescopeControl:
 
     def mxy(self, n, abs, x, y):
         #move telescope in instrument (detector) coordinates
-        instxoff = self.dcs['tvxoff']
-        instyoff = self.dcs['tvyff']
+        instxoff = self.dcs['instxoff']
+        instyoff = self.dcs['instyoff']
+        if n == True:
+            print("[mxy] move command (NOT SENT) is: instxoff.write(%f) instyoff.write(%f)" % (x, y))
+            return
         if abs == True:
             instxoff.write(x, rel2base = 't')
             instyoff.write(y, rel2base = 't')
@@ -143,9 +145,6 @@ class TelescopeControl:
             instxoff.write(x, rel2curr = 't')
             instyoff.write(y, rel2curr = 't')
         elapsedTime = self.wftel(self.autresum)
-        if n == True:
-            print("[mxy] move command (NOT SENT) is: instoffx.write(%f) instyoff.write(%f)" % (x, y))
-            return
         log.info("[mxy] offest %f, %f, abs = %s in detector coordinates" % (x, y, abs))
         print("[mxy] wftel completed in %f sec" % elapsedTime)
         return

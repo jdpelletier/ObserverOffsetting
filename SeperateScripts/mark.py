@@ -1,13 +1,23 @@
-def mark(self):
-    #stores current ra and dec offsets
-    #TODO syncheck
-    raoff = self.dcs['raoff']
-    decoff = self.dcs['decoff']
+import ktl
+import math
+import argparse
+
+parser = argparse.ArgumentParser(description="Stores current ra and dec offsets",
+                         usage="markbase.py")
+def mark():
+    dcs = ktl.Service('dcs')
+    instrument = dcs.read('INSTRUMENT')
+    instService = ktl.Service(instrument)
+    raoff = dcs['raoff']
+    decoff = dcs['decoff']
     raoff = raoff * 180 * 3600 / math.pi
     decoff = decoff * 180 * 3600 / math.pi
-    dec = self.dcs.read('dec')
+    dec = dcs.read('dec')
     raoff = raoff * math.cos(dec)
     instService['RAOFFSET'].write(raoff)
     instService['DECOFFSET'].write(decoff)
-    log.info("[mark] stored offsets RA %f, DEC %f" % (x, y))
-    return
+    #TODO logging
+    return True
+
+if name == __main__:
+    mark()

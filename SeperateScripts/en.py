@@ -1,14 +1,32 @@
-def en(self, x, y):
-    #	Move the telescope the given number of arcsec EAST & NORTH
-    #       relative to its current position
-    if(x == 0.0 and y == 0.0):
+import ktl
+import argparse
+import wftel
+
+parser = argparse.ArgumentParser(description="Move the telescope in the RA-DEC directions",
+                         usage="en.py raoff decoff")
+
+parser.add_argument("raoff", type = float, help="ra offset")
+
+parser.add_argument("decoff", type=float, help="dec offset")
+
+
+args = parser.parse_args()
+
+
+def en(x, Y):
+    if(x == 0.0 and yf == 0.0):
         print("WARNING: x and y moves are both zero -- exiting\n"")
-        return
-    raoff = self.dcs['raoff']
-    decoff = self.dcs['decoff']
+        quit()
+    dcs = ktl.Service('dcs')
+    raoff = dcs['raoff']
+    decoff = dcs['decoff']
     raoff.write(x, rel2curr = t)
     decoff.write(y, rel2curr = t)
-    elapsedTime = self.wftel(self.autresum)
-    log.info("[en] offset %f arcsec in RA, %f arcsec in DEC" % (x, y))
+    time.sleep(3)
+    elapsedTime = wftel()
+    #TODO add logging
     print("[en] wftel completed in %f sec" % elapsedTime)
-    return
+    return True
+
+if name == __main__:
+    en(args.raoff, args.decoff)

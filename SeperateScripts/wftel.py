@@ -1,16 +1,23 @@
+import ktl
+import time
+import argparse
+
+parser = argparse.ArgumentParser(description="Wait for the telescope move to complete, stores time it took to complete",
+                         usage="wftel.py")
+
 def wftel():
-    #wait for telescope move to complete
-    autresum = ktl.read('dcs', 'autresum')
+    dcs = ktl.Service('dcs')
+    autresum = dcs.read('autresum')
     startTime = time.time()
-    axestat = self.dcs.monitor('AXESTAT')
+    axestat = dcs.monitor('AXESTAT')
     ktl.waitfor(axestat == "tracking")
-    active = self.dcs.read("AUTACTIV")
+    active = dcs.read("AUTACTIV")
     if (active == 'no'):
         print("WARNING: guider not currently active.\n")
         return
     count = 0
     while(True):
-        if autresum != ktl.read('dcs', 'autresum'):
+        if autresum != dcs.read('autresum'):
             break
         count += 1
         if count >= 20:
@@ -19,7 +26,7 @@ def wftel():
         time.sleep(1)
     count = 0
     while(true):
-        autgo = self.dcs.read('autgo')
+        autgo = dcs.read('autgo')
         if autgo.upper() == "RESUMEACK" or augo.upper() == "GUIDE":
             break
         count += 1
@@ -29,3 +36,6 @@ def wftel():
         time.sleep(1)
     elapsedTime = time.time() - startTime
     return elapsedTime
+
+if name == __main__:
+    print("wftel completed in %f sec" % wftel())
