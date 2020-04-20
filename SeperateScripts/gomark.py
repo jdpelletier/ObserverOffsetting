@@ -6,7 +6,6 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Restore telescope position to saved offsets",
                          usage="gomark.py")
 
-log = KeckLogger.getLogger()
 
 def gomark():
     dcs = ktl.Service('dcs')
@@ -25,6 +24,7 @@ def gomark():
     dcs['raoff'].write(raoff, rel2base = 't')
     dcs['decoff'].write(decoff, rel2base = 't')
     elapsedTime = wftel()
+    log = KeckLogger.getLogger()
     log.info("[gomark] offset %f in RA, %f in DEC" % (raoff, decoff))
     print("[gomark] wftel completed in %f sec" % elapsedTime)
     return True

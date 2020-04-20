@@ -10,7 +10,7 @@ parser.add_argument("tvxoff", type = float, help="guider x offset")
 
 parser.add_argument("tvyoff", type=float, help="guider y offset")
 
-log = KeckLogger.getLogger()
+args = parser.parse_args()
 
 def gxy(x, Y):
     dcs = ktl.Service('dcs')
@@ -19,6 +19,7 @@ def gxy(x, Y):
     tvxoff.write(x, rel2curr = 't')
     tvyoff.write(y, rel2curr = 't')
     elapsedTime = wftel()
+    log = KeckLogger.getLogger()
     log.info("[gxy] offset %f, %f in guider coordinates" % (x, y))
     print("[gxy] wftel completed in %f sec" % elapsedTime)
     return True

@@ -16,7 +16,6 @@ parser.add_argument("instxoff", type = float, help="detector x offset")
 
 parser.add_argument("instyoff", type=float, help="detector y offset")
 
-log = KeckLogger.getLogger()
 
 def mxy(n, abs, x, y):
     dcs = ktl.Service('dcs')
@@ -33,6 +32,7 @@ def mxy(n, abs, x, y):
         instxoff.write(x, rel2curr = 't')
         instyoff.write(y, rel2curr = 't')
     elapsedTime = wftel()
+    log = KeckLogger.getLogger()
     log.info("[mxy] offest %f, %f, abs = %s in detector coordinates" % (x, y, abs))
     print("[mxy] wftel completed in %f sec" % elapsedTime)
     return

@@ -6,7 +6,6 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Stores current ra and dec offsets",
                          usage="markbase.py")
 
-log = KeckLogger.getLogger()
 
 def mark():
     dcs = ktl.Service('dcs')
@@ -20,6 +19,7 @@ def mark():
     raoff = raoff * math.cos(dec)
     instService['RAOFFSET'].write(raoff)
     instService['DECOFFSET'].write(decoff)
+    log = KeckLogger.getLogger()
     log.info("[mark] stored offsets RA %f, DEC %f" % (x, y))
     return True
 

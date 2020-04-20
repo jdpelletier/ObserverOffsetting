@@ -13,7 +13,6 @@ parser.add_argument("eloff", type=float, help="el offset")
 
 args = parser.parse_args()
 
-log = KeckLogger.getLogger()
 
 def azel(x, Y):
     dcs = ktl.Service('dcs')
@@ -23,6 +22,7 @@ def azel(x, Y):
     eloff.write(y, rel2curr = t)
     time.sleep(3)
     elapsedTime = wftel()
+    log = KeckLogger.getLogger()
     log.info("[azel] offset %f arcsec in AZ, %f arcsec in EL" % (x, y))
     print("[azel] wftel completed in %f sec" % elapsedTime)
     return True
