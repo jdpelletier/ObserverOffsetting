@@ -14,7 +14,7 @@ parser.add_argument("eloff", type=float, help="el offset")
 args = parser.parse_args()
 
 
-def azel(x, Y):
+def azel(x, y):
     dcs = ktl.Service('dcs')
     azoff = dcs['azoff']
     eloff = dcs['eloff']
