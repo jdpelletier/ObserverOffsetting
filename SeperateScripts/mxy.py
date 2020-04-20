@@ -16,6 +16,7 @@ parser.add_argument("instxoff", type = float, help="detector x offset")
 
 parser.add_argument("instyoff", type=float, help="detector y offset")
 
+args = parser.parse_args()
 
 def mxy(n, abs, x, y):
     dcs = ktl.Service('dcs')

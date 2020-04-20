@@ -5,6 +5,8 @@ from subprocess import Popen, PIPE
 parser = argparse.ArgumentParser(description="Return the cutom logger",
                          usage="log = getlogger()")
 
+args = parser.parse_args()
+
 def getLogger():
     log = logging.getLogger('MyLogger')
     log.setLevel(logging.INFO)

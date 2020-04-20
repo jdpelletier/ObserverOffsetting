@@ -4,6 +4,7 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Set the base telescope coordinates to the current coordinates",
                          usage="markbase.py")
 
+args = parser.parse_args()
 
 def markbase():
     dcs = ktl.Service('dcs')

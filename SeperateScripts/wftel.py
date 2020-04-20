@@ -6,6 +6,8 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Wait for the telescope move to complete, stores time it took to complete",
                          usage="wftel.py")
 
+args = parser.parse_args()
+
 def wftel():
     dcs = ktl.Service('dcs')
     autresum = dcs.read('autresum')

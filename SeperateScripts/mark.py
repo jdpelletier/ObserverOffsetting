@@ -6,6 +6,7 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Stores current ra and dec offsets",
                          usage="markbase.py")
 
+args = parser.parse_args()
 
 def mark():
     dcs = ktl.Service('dcs')

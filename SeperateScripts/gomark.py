@@ -6,6 +6,7 @@ import KeckLogger
 parser = argparse.ArgumentParser(description="Restore telescope position to saved offsets",
                          usage="gomark.py")
 
+args = parser.parse_args()
 
 def gomark():
     dcs = ktl.Service('dcs')
