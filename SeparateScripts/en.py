@@ -14,7 +14,7 @@ parser.add_argument("decoff", type=float, help="dec offset")
 args = parser.parse_args()
 
 
-def en(x, Y):
+def en(x, y):
     if(x == 0.0 and yf == 0.0):
         print("WARNING: x and y moves are both zero -- exiting\n"")
         quit()

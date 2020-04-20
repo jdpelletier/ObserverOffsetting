@@ -12,7 +12,7 @@ parser.add_argument("tvyoff", type=float, help="guider y offset")
 
 args = parser.parse_args()
 
-def gxy(x, Y):
+def gxy(x, y):
     dcs = ktl.Service('dcs')
     tvxoff = self.dcs['tvxoff']
     tvyoff = self.dcs['tvyoff']
