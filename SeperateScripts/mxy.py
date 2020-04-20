@@ -1,6 +1,7 @@
 import ktl
 import argparse
 import wftel
+import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the telescope detctor coordinates",
                          usage="mxy.py [-n] [-a] instxoff instyoff")
@@ -15,6 +16,7 @@ parser.add_argument("instxoff", type = float, help="detector x offset")
 
 parser.add_argument("instyoff", type=float, help="detector y offset")
 
+log = KeckLogger.getLogger()
 
 def mxy(n, abs, x, y):
     dcs = ktl.Service('dcs')
@@ -31,7 +33,7 @@ def mxy(n, abs, x, y):
         instxoff.write(x, rel2curr = 't')
         instyoff.write(y, rel2curr = 't')
     elapsedTime = wftel()
-    #TODO logging
+    log.info("[mxy] offest %f, %f, abs = %s in detector coordinates" % (x, y, abs))
     print("[mxy] wftel completed in %f sec" % elapsedTime)
     return
 

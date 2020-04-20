@@ -2,6 +2,7 @@ import ktl
 import argparse
 import wftel
 from mxy import mxy
+import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the object to a given position on the detector",
                          usage="mov.py [-n] x1 y1 x2 y2")
@@ -19,6 +20,8 @@ parser.add_argument("y2", type=float, help="final y pixel postion")
 
 args = parser.parse_args()
 
+log = KeckLogger.getLogger()
+
 dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUMENT')
 instService = ktl.Service(instrument)
@@ -32,4 +35,4 @@ if argos.nomove:
 else:
     print("Moving %f in x and %f in y" % (dx, dy))
     mxy(False, False, dx, dy)
-    #TODO log move
+    log.info('[mov] executed')

@@ -1,10 +1,15 @@
 import ktl
+import KeckLogger
+
+parser = argparse.ArgumentParser(description="Set the base telescope coordinates to the current coordinates",
+                         usage="markbase.py")
+
+log = KeckLogger.getLogger()
 
 def markbase():
-    #set the base telescope coordinates to the current coordinates
     dcs = ktl.Service('dcs')
     self.dcs['mark'].write('true')
-    #TODO logging
+    log.info("[mark] stored offsets RA %f, DEC %f" % (x, y))
     return True
 
 if name == __main__:

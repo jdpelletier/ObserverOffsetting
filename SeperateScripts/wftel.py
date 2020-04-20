@@ -1,9 +1,12 @@
 import ktl
 import time
 import argparse
+import KeckLogger
 
 parser = argparse.ArgumentParser(description="Wait for the telescope move to complete, stores time it took to complete",
                          usage="wftel.py")
+
+log = KeckLogger.getLogger()
 
 def wftel():
     dcs = ktl.Service('dcs')

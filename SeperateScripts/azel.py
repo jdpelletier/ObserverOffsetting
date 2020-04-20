@@ -1,6 +1,7 @@
 import ktl
 import argparse
 import wftel
+import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the telescope in the az-el directions",
                          usage="azel.py azoff eloff")
@@ -12,6 +13,7 @@ parser.add_argument("eloff", type=float, help="el offset")
 
 args = parser.parse_args()
 
+log = KeckLogger.getLogger()
 
 def azel(x, Y):
     dcs = ktl.Service('dcs')
@@ -21,7 +23,7 @@ def azel(x, Y):
     eloff.write(y, rel2curr = t)
     time.sleep(3)
     elapsedTime = wftel()
-    #TODO add logging
+    log.info("[azel] offset %f arcsec in AZ, %f arcsec in EL" % (x, y))
     print("[azel] wftel completed in %f sec" % elapsedTime)
     return True
 

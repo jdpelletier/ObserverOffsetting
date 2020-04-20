@@ -1,6 +1,7 @@
 import ktl
 import argparse
 import wftel
+import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the telescope in the RA-DEC directions",
                          usage="en.py raoff decoff")
@@ -12,6 +13,7 @@ parser.add_argument("decoff", type=float, help="dec offset")
 
 args = parser.parse_args()
 
+log = KeckLogger.getLogger()
 
 def en(x, Y):
     if(x == 0.0 and yf == 0.0):
@@ -24,7 +26,7 @@ def en(x, Y):
     decoff.write(y, rel2curr = t)
     time.sleep(3)
     elapsedTime = wftel()
-    #TODO add logging
+    log.info("[en] offset %f arcsec in RA, %f arcsec in DEC" % (x, y))
     print("[en] wftel completed in %f sec" % elapsedTime)
     return True
 
