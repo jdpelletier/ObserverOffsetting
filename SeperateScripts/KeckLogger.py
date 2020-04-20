@@ -1,4 +1,9 @@
 import logging
+import argparse
+from subprocess import Popen, PIPE
+
+parser = argparse.ArgumentParser(description="Return the cutom logger",
+                         usage="log = getlogger()")
 
 def getLogger():
     log = logging.getLogger('MyLogger')
@@ -13,3 +18,6 @@ def getLogger():
     LogFileHandler.setFormatter(LogFormat)
     log.addHandler(LogFileHandler)
     return log
+
+if name == __main__:
+    getLogger()
