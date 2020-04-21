@@ -25,7 +25,7 @@ class TelescopeControl:
 
     def __init__(self):
         self.dcs = ktl.Service('dcs')
-        self.instrument = self.dcs.read('INSTRUMENT')
+        self.instrument = self.dcs.read('INSTRUME')
         self.instService = ktl.Service(self.instrument)
         self.autresum = self.dcs.monitor('autresum')
 
