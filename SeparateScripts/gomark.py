@@ -10,7 +10,7 @@ args = parser.parse_args()
 
 def gomark():
     dcs = ktl.Service('dcs')
-    instrument = dcs.read('INSTRUMENT')
+    instrument = dcs.read('INSTRUME')
     instService = ktl.Service(instrument)
     raoff = instService['raoffset']
     decoff = instService['decoffset']

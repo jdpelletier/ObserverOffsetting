@@ -23,7 +23,7 @@ args = parser.parse_args()
 log = KeckLogger.getLogger()
 
 dcs = ktl.Service('dcs')
-instrument = dcs.read('INSTRUMENT')
+instrument = dcs.read('INSTRUME')
 instService = ktl.Service(instrument)
 gscale = instService.read('gscale')
 #NOTE gscale is not unified on instruments:
