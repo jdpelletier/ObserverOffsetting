@@ -10,7 +10,7 @@ args = parser.parse_args()
 def getLogger():
     log = logging.getLogger('MyLogger')
     log.setLevel(logging.INFO)
-    p = Popen('nightly', stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    p = Popen('nightpath', stdin=PIPE, stdout=PIPE, stderr=PIPE)
     ouput, err = p.communicate()
     nightpath = output.strip() + 'instrumentOffsets'
     LogFileHandler = logging.FileHandler(nightpath)
