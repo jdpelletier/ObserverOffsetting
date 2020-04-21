@@ -1,3 +1,3 @@
-import TelescopeControl
+from OffsetLib import *
 
-##This script will be a command line way to use the TelescopeControl class
+print("loaded ok")
