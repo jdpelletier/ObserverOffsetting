@@ -4,8 +4,8 @@ import argparse
 
 import ktl
 
-parser = argparse.ArgumentParser(description="Stores current ra and dec offsets",
-                         usage="markbase.py")
+parser = argparse.ArgumentParser(description="Returns path to nightly directory and if it exists",
+                         usage="nightpath.py")
 
 args = parser.parse_args()
 
