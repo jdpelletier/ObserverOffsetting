@@ -26,6 +26,9 @@ dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUMENT')
 instService = ktl.Service(instrument)
 pscale = instService.read('pscale')
+#NOTE pscale is not unified on instruments:
+    #MOSFIRE: This keyword SHOULD work
+    #KCWI: pscale is currently hardcoded
 
 dx = pscale * (args.x1-args.x2)
 dy = pscale * (args.y2-args.y1)

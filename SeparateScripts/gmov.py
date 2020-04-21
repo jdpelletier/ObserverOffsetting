@@ -26,6 +26,9 @@ dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUMENT')
 instService = ktl.Service(instrument)
 gscale = instService.read('gscale')
+#NOTE gscale is not unified on instruments:
+    #MOSFIRE: This keyword SHOULD work
+    #KCWI: gscale is currently hardcoded
 
 dx = gscale * (args.x1-args.x2)
 dy = gscale * (args.y2-args.y1)
