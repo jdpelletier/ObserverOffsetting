@@ -27,5 +27,5 @@ def azel(x, y):
     print("[azel] wftel completed in %f sec" % elapsedTime)
     return True
 
-if name == __main__:
+if __name__ =='__main__':
     azel(args.azoff, args.eloff)

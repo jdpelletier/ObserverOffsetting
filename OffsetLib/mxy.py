@@ -38,5 +38,5 @@ def mxy(n, abs, x, y):
     print("[mxy] wftel completed in %f sec" % elapsedTime)
     return
 
-if name == __main__:
+if __name__ =='__main__':
     mxy(args.nomove, args.absolute, args.x, args.y)

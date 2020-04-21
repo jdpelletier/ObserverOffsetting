@@ -13,5 +13,5 @@ def markbase():
     log.info("[mark] stored offsets RA %f, DEC %f" % (x, y))
     return True
 
-if name == __main__:
+if __name__ =='__main__':
     markbase()

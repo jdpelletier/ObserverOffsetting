@@ -24,5 +24,5 @@ def gxy(x, y):
     print("[gxy] wftel completed in %f sec" % elapsedTime)
     return True
 
-if name == __main__:
+if __name__ =='__main__':
     gxy(args.tvxoff, args.tvyoff)

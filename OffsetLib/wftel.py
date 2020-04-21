@@ -40,5 +40,5 @@ def wftel():
     elapsedTime = time.time() - startTime
     return elapsedTime
 
-if name == __main__:
+if __name__ =='__main__':
     print("wftel completed in %f sec" % wftel())
