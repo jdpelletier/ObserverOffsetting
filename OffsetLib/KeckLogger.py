@@ -13,7 +13,7 @@ def getLogger():
     log = logging.getLogger('MyLogger')
     log.setLevel(logging.INFO)
     nightly = nightpath()
-    nightly = nightly / 'instrumentOffsets'
+    nightly = nightly / 'instrumentOffsets.log'
     LogFileHandler = logging.FileHandler(nightly)
     LogFormat = logging.Formatter('%(asctime)s:%(message)s',
                                   datefmt='%Y-%m-%d %H:%M:%S')
