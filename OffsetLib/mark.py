@@ -1,6 +1,8 @@
-import ktl
 import math
 import argparse
+
+import ktl
+
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Stores current ra and dec offsets",

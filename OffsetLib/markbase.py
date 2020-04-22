@@ -1,4 +1,5 @@
 import ktl
+
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Set the base telescope coordinates to the current coordinates",

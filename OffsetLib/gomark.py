@@ -1,7 +1,9 @@
-import ktl
-import wftel
 import argparse
+
+import ktl
+
 import KeckLogger
+from wftel import wftel
 
 parser = argparse.ArgumentParser(description="Restore telescope position to saved offsets",
                          usage="gomark.py")

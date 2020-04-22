@@ -1,6 +1,7 @@
-import ktl
 import argparse
-import wftel
+
+import ktl
+
 from mxy import mxy
 import KeckLogger
 

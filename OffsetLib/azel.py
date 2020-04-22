@@ -1,6 +1,7 @@
 import ktl
 import argparse
-import wftel
+
+from wftel import wftel
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the telescope in the az-el directions",

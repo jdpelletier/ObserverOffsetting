@@ -1,6 +1,8 @@
-import ktl
 import time
 import argparse
+
+import ktl
+
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Wait for the telescope move to complete, stores time it took to complete",

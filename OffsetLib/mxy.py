@@ -1,6 +1,8 @@
-import ktl
 import argparse
-import wftel
+
+import ktl
+
+from wftel import wftel
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the telescope detctor coordinates",
