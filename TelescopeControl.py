@@ -5,19 +5,10 @@ from subprocess import Popen, PIPE
 
 import ktl
 
-
+from OffsetLib import KeckLogger
 
 ##Logger setup
-log = logging.getLogger('MyLogger')
-log.setLevel(logging.INFO)
-p = Popen('nightly', stdin=PIPE, stdout=PIPE, stderr=PIPE)
-ouput, err = p.communicate()
-nightpath = output.strip() + 'instrumentOffsets'
-LogFileHandler = logging.FileHandler(nightpath)
-LogFormat = logging.Formatter('%(asctime)s:%(message)s',
-                              datefmt='%Y-%m-%d %H:%M:%S')
-LogFileHandler.setFormatter(LogFormat)
-log.addHandler(LogFileHandler)
+log = KeckLogger.getLogger()
 ##End logger setup
 
 
