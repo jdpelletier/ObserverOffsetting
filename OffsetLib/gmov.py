@@ -37,5 +37,5 @@ if argos.nomove:
     print("Required %f in x and %f in y" % (dx, dy))
 else:
     print("Moving %f in x and %f in y" % (dx, dy))
-    gxy(dx, dy)
+    gxy(False, dx, dy)
     log.info('[gmov] executed')
