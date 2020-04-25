@@ -69,6 +69,7 @@ def executeCommand(command):
 
 ##If the command only needs x and y coords, run this function.
 def getXY(command):
+    abs = False
     coordString = input('Enter offset numbers as x y (no comma): ')
     coords = coordString.split()
     while len(coords) != 2 or ',' in coordString:
@@ -76,24 +77,32 @@ def getXY(command):
         coords = coordString.split()
     x = start[0]
     y = start[1]
-    moveFrame(command)(x, y)
+    if command == 3:
+        argTuple = (False, x, y)
+    elif command == 4:
+        absString = input(
+            '''
+            Move relative to:
+            1: Current position
+            2: Base
+            '''
+            )
+        while absString != '1' or '2'
+            absString = input("Error: Enter 1 (current) or 2 (base): ")
+        if absString = '2':
+            abs = True
+        argTuple = (False, abs, x, y)
+    else:
+        argTuple = (x, y)
+    moveFrame(command)(*argTuple)
     return True
 ##
 
 
 ##Function for moving object to spot on guider or detector
-#TODO add nomove
 def getSpecMove(command):
-    abs = False
     frame = 'guider'
-    moveString = input(
-        '''
-        Do you want to:
-        1: Send moves
-        2: Check offset
-        '''
-        )
-    
+    nomove = False
     if command == 6:
         frame = 'detector'
     startString = input('Enter the %s pixel coordinates of the object (no comma): ' % frame)
@@ -103,58 +112,39 @@ def getSpecMove(command):
         start = startString.split()
     endString = input('Enter the destination guider pixel coordinates (no comma): ')
     end = endString.split()
-    while len(end) != 2 or ',' in startString:
+    while len(end) != 2 or ',' in endString:
         endString = input('Error: Enter input as x y (no comma): ')
         end = endString.split()
-    if command == 6:
+    moveString = input(
+        '''
+        Do you want to:
+        1: Send moves
+        2: Check offset
+        '''
+        )
+    while moveString != '1' or '2'
+        moveString = input("Error: Enter 1 (send move) or 2 (no move): ")
+    if moveString == '2':
+        nomove = True
+    if command == 5:
+        gscale = getGscale()
+        dx = gscale * (start[0]-end[0])
+        dy = gscale * (end[1]-start[1])
+        argTuple = (nomove, dx, dy)
+    else:
         pscale = getPscale()
         dx = pscale * (start[0]-end[0])
         dy = pscale * (end[1]-start[1])
-        absString = input(
-            '''
-            Send move reletive to:
-            1: Current
-            2: Base
-            '''
-            )
-        if absString == '2':
-            abs = True
-
-    gscale = getGscale()
-    dx = gscale * (start[0]-end[0])
-    dy = gscale * (end[1]-start[1])
-    print("Sending star at %s to %s..." % (startString, endString))
-    moveFrame(3)(dx, dy)
+        argTuple = (nomove, False, dx, dy)
+    moveFrame(command)(*argTuple)
     return True
-##
-
-##Function for moving object to spot on detector
-#TODO add nomove and abs
-def getDmov():
-    startString = input('Enter the detector pixel coordinates of the object (no comma): ')
-    start = startString.split()
-    while len(start) != 2 or ',' in startString:
-        startString = input('Error: Enter input as x y (no comma): ')
-        start = startString.split()
-    endString = input('Enter the destination detector pixel coordinates (no comma): ')
-    end = endString.split()
-    while len(end) != 2 or ',' in startString:
-        endString = input('Error: Enter input as x y (no comma): ')
-        end = endString.split()
-    print("Sending star at %s to %s..." % (startString, endString))
-    pscale = getPscale()
-    dx = pscale * (start[0]-end[0])
-    dy = pscale * (end[1]-start[1])
-    moveFrame(4)(nomove, dx, dy)
-    return true
-
 ##
 
 ##Quitting program
 def endprogram():
     print('Ending Telescope Controller...')
     sys.exit()
-
+##
 
 #Command "switch case"
 def moveFrame(i):
