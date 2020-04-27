@@ -2,8 +2,6 @@ import sys
 import os
 import platform
 
-import ktl
-
 from OffsetLib import azel
 from OffsetLib import en
 from OffsetLib import gxy
@@ -16,11 +14,6 @@ if platform.system() == "Windows":
     os.system('cls')
 else:
     os.system('clear')
-
-
-##cache instrument
-instrument = ktl.cache('dcs', 'INSTRUME')
-
 ##Welcome print
 
 print('''
@@ -29,19 +22,6 @@ print('''
 -----------------------------------------
 ''')
 
-
-##Get Pscale and Gscale function for Gmov and Dmov
-##NOTE: this is not unified over all instruments yet,
-##      works for MOSFIRE but not KCWI, trying to fix
-##      that but may need to adjust this.
-def getPscale(instrument):
-    inst = ktl.read(instrument)
-    return ktl.read(inst, 'pscale')
-
-def getGscale(instrument):
-    inst = ktl.read(instrument)
-    return ktl.read(inst, 'gscale')
-##
 
 
 ##Function to print instructions and get command from user.
@@ -58,7 +38,7 @@ def getCommand():
         7: Mark current position
         8: Go to previously marked position
         9: Mark base
-        10: Quit (crtl-c) \n
+        10: Quit (crtl-c)
         '''
         )
     response = input('>>> ')
@@ -148,14 +128,14 @@ def getSpecMove(command):
     if moveString == 2:
         nomove = True
     if command == 5:
-        gscale = getGscale()
+        gscale = .5
         dx = gscale * (int(start[0])-int(end[0]))
         dy = gscale * (int(end[1])-int(start[1]))
         command = 3
         argTuple = (nomove, dx, dy)
     else:
-        pscale = getPscale()
-        dx = pscale * (int(start[0])-int(end[0])
+        pscale = .3
+        dx = pscale * (int(start[0])-int(end[0]))
         dy = pscale * (int(end[1])-int(start[1]))
         command = 4
         argTuple = (nomove, False, dx, dy)
