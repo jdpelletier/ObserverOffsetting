@@ -7,6 +7,15 @@ import ktl
 
 from OffsetLib import KeckLogger
 
+'''
+This is currently just a test class that I created,
+it's not being ran in moveTel.py, or anywhere else.
+It just exists.
+'''
+
+
+
+
 ##Logger setup
 log = KeckLogger.getLogger()
 ##End logger setup
