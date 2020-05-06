@@ -4,6 +4,7 @@ import ktl
 
 from mxy import mxy
 from getScales import getScales
+from gapCheck import gapCheck
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the object to a given position on the detector",
@@ -25,10 +26,14 @@ args = parser.parse_args()
 log = KeckLogger.getLogger()
 
 dcs = ktl.Service('dcs')
+
+x1, y1, x2, y2 = args.x1, args.y1, args.x2, args.y2
+
 instrument = dcs.read('INSTRUME')
 scalestring = 'pscale'
+
 if instrument == 'lris':
-    response = input('Red or blue side? > ')
+    response = input('Red or blue side? (Where are you starting if both)> ')
     while scalestring = 'pscale':
         if response in ['red', 'Red', 'RED', 'r']:
             scalestring = 'pscaler'
@@ -36,11 +41,13 @@ if instrument == 'lris':
             scalestring = 'pscaleb'
         else:
             response = input('Respond with red or blue > ')
+    x1, y1, x2, y2 = gapCheck(x1, y1, x2, y2, scalestring)
 
 pscale = getScales(instrument, scalestring)
 
-dx = pscale * (args.x1-args.x2)
-dy = pscale * (args.y2-args.y1)
+
+dx = pscale * (x1-x2)
+dy = pscale * (y2-y1)
 
 if argos.nomove:
     print("Required %f in x and %f in y" % (dx, dy))

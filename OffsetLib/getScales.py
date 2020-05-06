@@ -3,7 +3,7 @@ import argparse
 import ktl
 
 parser = argparse.ArgumentParser(description="Return specified instrument pscale or gscale",
-                         usage="mov.py instrument scale")
+                         usage="getScales.py instrument scale")
 
 parser.add_argument("instrument", help="instrument you want to check")
 
@@ -20,7 +20,7 @@ def getScales(instrument, scale):
                   'nirc2': {'pscale': 0.009942, 'gscale': 0.1},
                   'nirspec': {'pscale': 0.1185, 'gscale': 0.207},
                   'esi': {'pscale': 0.153, 'gscale': 0.233},
-                  'deimos': {'pscale': 0.0, 'gscale': 0.1},
+                  'deimos': {'pscale': 0.1185, 'gscale': 0.207},
                   'nires': {'pscale': 0.123, 'gscale': 0.244}
                   }
     return scale_dict[instrument][scale]

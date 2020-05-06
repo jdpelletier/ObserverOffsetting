@@ -11,12 +11,16 @@ from OffsetLib import mxy
 from OffsetLib import mark
 from OffsetLib import gomark
 from OffsetLib import markbase
+from OffsetLib import getScales
+from OffsetLib import gapCheck
 
 if platform.system() == "Windows":
     os.system('cls')
 else:
     os.system('clear')
 
+##cache instrument
+instrument = ktl.cache('dcs', 'INSTRUME')
 
 ##Welcome print
 
@@ -131,7 +135,7 @@ def getSpecMove(command, instrument):
     if moveString == 2:
         nomove = True
     if command == 5:
-        gscale = getScalescale(instrument, 'gscale')
+        gscale = getScales.getScales(instrument, 'gscale')
         dx = gscale * (int(start[0])-int(end[0]))
         dy = gscale * (int(end[1])-int(start[1]))
         command = 3
@@ -147,7 +151,9 @@ def getSpecMove(command, instrument):
                     scalestring = 'pscaleb'
                 else:
                     response = input('Respond with red or blue > ')
-        pscale = getScales(instrument, scalestring)
+            start[0], start[1], end[0], end[1] = gapCheck.gapCheck(start[0], start[1], end[0], end[1])
+        pscale = getScales.getScales(instrument, scalestring)
+        #TODO this is probably differnt for each detector, need to update
         dx = pscale * (int(start[0])-int(end[0])
         dy = pscale * (int(end[1])-int(start[1]))
         command = 4
@@ -176,7 +182,7 @@ def moveFrame(i):
     return switcher.get(i,"Invalid choice")
 ##
 
-def main():
+def main(instrument):
     '''
     Script works by first setting completion flag to "False", then
     asking the user for the move they'd like to execute. After getting
@@ -184,11 +190,9 @@ def main():
     works, the move should return "True" which sets the completetion
     flag to "True". Script runs until KeyboardInterrupt or user shutdown.
     '''
-    ##cache instrument
-    instrument = ktl.cache('dcs', 'INSTRUME')
     completion = False
     command = getCommand()
-    completion = executeCommand(command, instrument)
+    completion = executeCommand(command, instrument.read())
     if completion == True:
         print('Action successfully completed!')
     else:
@@ -204,7 +208,7 @@ if __name__=='__main__':
             entering in letters.
             '''
             try:
-                main()
+                main(instrument)
             except ValueError:
                 print("\nWARNING: only enter numbers.\n")
                 continue
