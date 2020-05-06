@@ -18,9 +18,6 @@ else:
     os.system('clear')
 
 
-##cache instrument
-instrument = ktl.cache('dcs', 'INSTRUME')
-
 ##Welcome print
 
 print('''
@@ -28,20 +25,6 @@ print('''
 ------Telescope controller started!------
 -----------------------------------------
 ''')
-
-
-##Get Pscale and Gscale function for Gmov and Dmov
-##NOTE: this is not unified over all instruments yet,
-##      works for MOSFIRE but not KCWI, trying to fix
-##      that but may need to adjust this.
-def getPscale(instrument):
-    inst = ktl.read(instrument)
-    return ktl.read(inst, 'pscale')
-
-def getGscale(instrument):
-    inst = ktl.read(instrument)
-    return ktl.read(inst, 'gscale')
-##
 
 
 ##Function to print instructions and get command from user.
@@ -72,11 +55,11 @@ def getCommand():
 # to see if the move was executed. Will add
 # more error handling when we can start testing
 # moves.
-def executeCommand(command):
+def executeCommand(command, instrument):
     if command in range(1, 5):
         return moveFrame(command)(*getXY(command))
     elif command in range(5, 7):
-        argTuple = getSpecMove(command)
+        argTuple = getSpecMove(command, instrument)
         command = command - 2
         return moveFrame(command)(*argTuple)
     elif command in range(7 ,11):
@@ -120,7 +103,7 @@ def getXY(command):
 
 
 ##Function for moving object to spot on guider or detector
-def getSpecMove(command):
+def getSpecMove(command, instrument):
     frame = 'guider'
     nomove = False
     if command == 6:
@@ -148,13 +131,23 @@ def getSpecMove(command):
     if moveString == 2:
         nomove = True
     if command == 5:
-        gscale = getGscale()
+        gscale = getScalescale(instrument, 'gscale')
         dx = gscale * (int(start[0])-int(end[0]))
         dy = gscale * (int(end[1])-int(start[1]))
         command = 3
         argTuple = (nomove, dx, dy)
     else:
-        pscale = getPscale()
+        scalestring = 'pscale'
+        if instrument == 'lris':
+            response = input('Red or blue side? > ')
+            while scalestring = 'pscale':
+                if response in ['red', 'Red', 'RED', 'r']:
+                    scalestring = 'pscaler'
+                elif response in ['blue', 'Blue', 'BLUE']:
+                    scalestring = 'pscaleb'
+                else:
+                    response = input('Respond with red or blue > ')
+        pscale = getScales(instrument, scalestring)
         dx = pscale * (int(start[0])-int(end[0])
         dy = pscale * (int(end[1])-int(start[1]))
         command = 4
@@ -191,10 +184,11 @@ def main():
     works, the move should return "True" which sets the completetion
     flag to "True". Script runs until KeyboardInterrupt or user shutdown.
     '''
-
+    ##cache instrument
+    instrument = ktl.cache('dcs', 'INSTRUME')
     completion = False
     command = getCommand()
-    completion = executeCommand(command)
+    completion = executeCommand(command, instrument)
     if completion == True:
         print('Action successfully completed!')
     else:

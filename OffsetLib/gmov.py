@@ -2,6 +2,7 @@ import ktl
 import argparse
 
 from gxy import gxy
+from getScales import getScales
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the object to a given position on the guider",
@@ -24,11 +25,7 @@ log = KeckLogger.getLogger()
 
 dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUME')
-instService = ktl.Service(instrument)
-gscale = instService.read('gscale')
-#NOTE gscale is not unified on instruments:
-    #MOSFIRE: This keyword SHOULD work
-    #KCWI: gscale is currently hardcoded
+gscale = getScales(instrument, 'gscale')
 
 dx = gscale * (args.x1-args.x2)
 dy = gscale * (args.y2-args.y1)

@@ -3,6 +3,7 @@ import argparse
 import ktl
 
 from mxy import mxy
+from getScales import getScales
 import KeckLogger
 
 parser = argparse.ArgumentParser(description="Move the object to a given position on the detector",
@@ -25,11 +26,18 @@ log = KeckLogger.getLogger()
 
 dcs = ktl.Service('dcs')
 instrument = dcs.read('INSTRUME')
-instService = ktl.Service(instrument)
-pscale = instService.read('pscale')
-#NOTE pscale is not unified on instruments:
-    #MOSFIRE: This keyword SHOULD work
-    #KCWI: pscale is currently hardcoded
+scalestring = 'pscale'
+if instrument == 'lris':
+    response = input('Red or blue side? > ')
+    while scalestring = 'pscale':
+        if response in ['red', 'Red', 'RED', 'r']:
+            scalestring = 'pscaler'
+        elif response in ['blue', 'Blue', 'BLUE']:
+            scalestring = 'pscaleb'
+        else:
+            response = input('Respond with red or blue > ')
+
+pscale = getScales(instrument, scalestring)
 
 dx = pscale * (args.x1-args.x2)
 dy = pscale * (args.y2-args.y1)
