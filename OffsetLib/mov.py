@@ -43,6 +43,11 @@ if instrument == 'lris':
             response = input('Respond with red or blue > ')
     x1, y1, x2, y2 = gapCheck(x1, y1, x2, y2, scalestring)
 
+elif instrument == 'osiris':
+    response = input('osimg or ospec? > ')
+    if response in ['OSPEC', 'ospec', 'Ospec']:
+        scalestring = 'sscale'
+
 pscale = getScales(instrument, scalestring)
 
 

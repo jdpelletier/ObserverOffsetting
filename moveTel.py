@@ -152,6 +152,10 @@ def getSpecMove(command, instrument):
                 else:
                     response = input('Respond with red or blue > ')
             start[0], start[1], end[0], end[1] = gapCheck.gapCheck(start[0], start[1], end[0], end[1])
+        elif instrument == 'osiris':
+            response = input('osimg or ospec? > ')
+            if response in ['OSPEC', 'ospec', 'Ospec']:
+                scalestring = 'sscale'
         pscale = getScales.getScales(instrument, scalestring)
         #TODO this is probably differnt for each detector, need to update
         dx = pscale * (int(start[0])-int(end[0])

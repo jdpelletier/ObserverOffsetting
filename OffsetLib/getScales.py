@@ -15,7 +15,7 @@ def getScales(instrument, scale):
     scale_dict = {'mosfire': {'pscale': 0.1799, 'gscale': 0.164},
                   'lris': {'pscaler': 0.134, 'pscaleb': 0.135, 'gscale': 0.239},
                   'hires': {'pscale': 0.0, 'gscale': 0.1},
-                  'osiris': {'pscale': 0.0, 'gscale': 0.1},
+                  'osiris': {'pscale': 0.01, 'sscale': ktl.read('instrument', 'sscale'), 'gscale': 0.1338},
                   'kcwi': {'pscale': 0.0076, 'gscale': 0.184},
                   'nirc2': {'pscale': 0.009942, 'gscale': 0.1},
                   'nirspec': {'pscale': 0.1185, 'gscale': 0.207},
@@ -26,4 +26,4 @@ def getScales(instrument, scale):
     return scale_dict[instrument][scale]
 
 if __name__=='__main__':
-    print(getScales(args.instrument, args.scale))
+    getScales(args.instrument, args.scale)
