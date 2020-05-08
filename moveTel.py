@@ -186,7 +186,7 @@ def moveFrame(i):
     return switcher.get(i,"Invalid choice")
 ##
 
-def main(instrument):
+def main():
     '''
     Script works by first setting completion flag to "False", then
     asking the user for the move they'd like to execute. After getting
@@ -212,7 +212,7 @@ if __name__=='__main__':
             entering in letters.
             '''
             try:
-                main(instrument)
+                main()
             except ValueError:
                 print("\nWARNING: only enter numbers.\n")
                 continue
