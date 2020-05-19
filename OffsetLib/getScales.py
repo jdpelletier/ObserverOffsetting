@@ -14,7 +14,7 @@ args = parser.parse_args()
 def getScales(instrument, scale):
     scale_dict = {'mosfire': {'pscale': ktl.read(instrument, 'pscale'), 'gscale': ktl.read(instrument, 'gscale')},
                   'lris': {'pscaler': 0.134, 'pscaleb': 0.135, 'gscale': 0.239},
-                  'hires': {'pscale': 0.0, 'gscale': 0.1},
+                  'hires': {'pscale': 0.12, 'gscale': 0.086},
                   'osiris': {'pscale': ktl.read(instrument, 'pscale'), 'sscale': ktl.read(instrument, 'sscale'), 'gscale': 0.1338},
                   'kcwi': {'pscale': 0.0076, 'gscale': 0.184},
                   'nirc2': {'pscale': 0.009942, 'gscale': 0.134},
